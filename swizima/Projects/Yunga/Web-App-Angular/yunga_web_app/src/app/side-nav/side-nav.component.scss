@@ -1,0 +1,47 @@
+.sidenav-container {
+  height: 86vh;
+}
+
+.sidenav {
+  width: 260px;
+  margin-top: 8vh;
+  background-color: #ffffff;
+  //background: inherit;
+
+}
+
+.sidenav a {
+  color: #575757;
+  font-size: 14px;
+}
+
+#content {
+  background-color: white;
+}
+
+.mat-mdc-form-field+.mat-mdc-form-field {
+  margin-left: 0px;
+}
+
+.example-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field+.mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+mat-expansion-panel-header {
+  margin-left: 0px;
+}
+
+mat-panel-title {
+  margin-left: 0px;
+  font-size: 13px;
+
+}

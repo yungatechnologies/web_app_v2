@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "yunga_web_app",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

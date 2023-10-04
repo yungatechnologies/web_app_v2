@@ -1,0 +1,37 @@
+<!-- <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()"
+      *ngIf="toggleSideNavService.isHandset$ | async">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button> -->
+<mat-toolbar color="primary" class="flex justify-between items-center">
+    <!--left-->
+    <div>
+        <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>  -->
+        <span><img width="150" alt="Angular Logo" src="../../assets/images/logo.png" /></span>
+    </div> 
+
+    <!--right-->
+
+    <div>
+        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+        class="flex justify-between items-center">
+            <mat-icon>help_outline</mat-icon>
+            <span> &nbsp;Get Help</span>
+        </button>
+    </div> 
+
+    <div class="flex justify-between items-center">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon"
+            aria-label="Example icon-button with share icon">
+            <mat-icon>person_outline</mat-icon>
+        </button>
+    </div> 
+    
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>My Account</button>
+        <button mat-menu-item>Logout</button>
+    </mat-menu>
+
+</mat-toolbar>
+

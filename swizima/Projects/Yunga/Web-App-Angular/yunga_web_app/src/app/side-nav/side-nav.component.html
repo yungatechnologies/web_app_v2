@@ -1,0 +1,77 @@
+<!--
+
+   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(toggleSideNavService.isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(toggleSideNavService.isHandset$ | async) ? 'over' : 'side'" [opened]="(toggleSideNavService.isHandset$ | async) === false">
+-->
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport role="navigation" mode="side" opened=true>
+<mat-nav-list>
+      <a mat-list-item routerLink="dashboard">
+            <mat-icon class="icon_awesome">dashboard</mat-icon>
+            <span> &nbsp; Dashboard</span>
+          </a>
+        </mat-nav-list>
+
+        <mat-nav-list>
+          <a mat-list-item routerLink="customers">
+          <mat-icon class="icon_awesome">people</mat-icon>
+          <span> &nbsp; Customers</span>
+          </a>
+        </mat-nav-list>
+
+              <mat-nav-list>
+          <a mat-list-item routerLink="devices">
+          <mat-icon class="icon_awesome">category</mat-icon>
+          <span> &nbsp; Devices</span>
+          </a>
+        </mat-nav-list>
+
+              <mat-nav-list>
+          <a mat-list-item routerLink="communities">
+          <mat-icon class="icon_awesome">api</mat-icon>
+          <span> &nbsp; Communities</span>
+          </a>
+        </mat-nav-list>
+      
+        <mat-nav-list>
+          <a mat-list-item routerLink="networks">
+          <mat-icon class="icon_awesome">api</mat-icon>
+          <span> &nbsp; Networks</span>
+          </a>
+        </mat-nav-list>
+      
+        <mat-nav-list>
+          <a mat-list-item routerLink="users">
+          <mat-icon class="icon_awesome">api</mat-icon>
+          <span> &nbsp; System Users</span>
+          </a>
+        </mat-nav-list>
+      
+        <mat-nav-list> 
+          <a mat-list-item routerLink="apis">
+          <mat-icon class="icon_awesome">api</mat-icon>
+          <span> &nbsp; Device Simulations</span>
+          </a>
+        </mat-nav-list>
+      
+        <mat-nav-list>
+          <a mat-list-item routerLink="apis">
+          <mat-icon class="icon_awesome">api</mat-icon>
+          <span> &nbsp; Messages</span>
+          </a>
+        </mat-nav-list>
+      
+        <mat-nav-list>
+          <a mat-list-item routerLink="rapid_responders">
+          <mat-icon class="icon_awesome">api</mat-icon>
+          <span> &nbsp; Rapid Responders</span>
+      </a>
+        </mat-nav-list>
+      
+  </mat-sidenav>
+  <mat-sidenav-content id="content"> 
+<!-- Add Content Here -->
+    <app-main></app-main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

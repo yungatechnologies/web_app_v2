@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "yunga-232719": {
+      "hosting": {
+        "yunga_web_app": [
+          "yunga-232719"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "yunga-232719"
+  }
+}
