@@ -6,72 +6,72 @@
 
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport role="navigation" mode="side" opened=true>
-<mat-nav-list>
+    <mat-nav-list>
       <a mat-list-item routerLink="dashboard">
-            <mat-icon class="icon_awesome">dashboard</mat-icon>
-            <span> &nbsp; Dashboard</span>
-          </a>
-        </mat-nav-list>
-
-        <mat-nav-list>
-          <a mat-list-item routerLink="customers">
-          <mat-icon class="icon_awesome">people</mat-icon>
-          <span> &nbsp; Customers</span>
-          </a>
-        </mat-nav-list>
-
-              <mat-nav-list>
-          <a mat-list-item routerLink="devices">
-          <mat-icon class="icon_awesome">category</mat-icon>
-          <span> &nbsp; Devices</span>
-          </a>
-        </mat-nav-list>
-
-              <mat-nav-list>
-          <a mat-list-item routerLink="communities">
-          <mat-icon class="icon_awesome">api</mat-icon>
-          <span> &nbsp; Communities</span>
-          </a>
-        </mat-nav-list>
-      
-        <mat-nav-list>
-          <a mat-list-item routerLink="networks">
-          <mat-icon class="icon_awesome">api</mat-icon>
-          <span> &nbsp; Networks</span>
-          </a>
-        </mat-nav-list>
-      
-        <mat-nav-list>
-          <a mat-list-item routerLink="users">
-          <mat-icon class="icon_awesome">api</mat-icon>
-          <span> &nbsp; System Users</span>
-          </a>
-        </mat-nav-list>
-      
-        <mat-nav-list> 
-          <a mat-list-item routerLink="apis">
-          <mat-icon class="icon_awesome">api</mat-icon>
-          <span> &nbsp; Device Simulations</span>
-          </a>
-        </mat-nav-list>
-      
-        <mat-nav-list>
-          <a mat-list-item routerLink="apis">
-          <mat-icon class="icon_awesome">api</mat-icon>
-          <span> &nbsp; Messages</span>
-          </a>
-        </mat-nav-list>
-      
-        <mat-nav-list>
-          <a mat-list-item routerLink="rapid_responders">
-          <mat-icon class="icon_awesome">api</mat-icon>
-          <span> &nbsp; Rapid Responders</span>
+        <mat-icon class="icon_awesome">dashboard</mat-icon>
+        <span> &nbsp; Dashboard</span>
       </a>
-        </mat-nav-list>
-      
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="customers">
+        <mat-icon class="icon_awesome">people</mat-icon>
+        <span> &nbsp; Customers</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="devices">
+        <mat-icon class="icon_awesome">category</mat-icon>
+        <span> &nbsp; Devices</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="communities">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="support"></mat-icon>
+        <span> &nbsp; Communities</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="networks">
+        <mat-icon class="icon_awesome">hub</mat-icon>
+        <span> &nbsp; Networks</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="users">
+        <mat-icon class="icon_awesome">group_add</mat-icon>
+        <span> &nbsp; System Users</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="apis">
+        <mat-icon class="icon_awesome">api</mat-icon>
+        <span> &nbsp; Device Simulations</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="apis">
+        <mat-icon class="icon_awesome">mail</mat-icon>
+        <span> &nbsp; Messages</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="rapid_responders">
+        <mat-icon class="icon_awesome">local_police</mat-icon>
+        <span> &nbsp; Rapid Responders</span>
+      </a>
+    </mat-nav-list>
+
   </mat-sidenav>
-  <mat-sidenav-content id="content"> 
-<!-- Add Content Here -->
+  <mat-sidenav-content id="content">
+    <!-- Add Content Here -->
     <app-main></app-main>
   </mat-sidenav-content>
 </mat-sidenav-container>
