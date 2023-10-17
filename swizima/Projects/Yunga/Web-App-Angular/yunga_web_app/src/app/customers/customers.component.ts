@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonsService } from '../commons/commons.service';
 import { CustomerDto } from './customer.dto';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomerPopupComponent } from './popups/customer-popup.component';
 
 @Component({
     selector: 'app-customer',
@@ -25,7 +27,7 @@ export class CustomersComponent implements AfterViewInit {
 
     customers!: CustomerDto[];
 
-    constructor(private commonsService: CommonsService) {
+    constructor(private commonsService: CommonsService,public dialog: MatDialog) {
         // this.myDiv.nativeElement.innerHTML = 'GALIWANGO'
         // Create 100 users
         //const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
@@ -68,6 +70,12 @@ export class CustomersComponent implements AfterViewInit {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+    }
+
+    addNewCustomer(){
+        this.dialog.open(CustomerPopupComponent,{
+            width:'30%', 
+        });
     }
 
 }

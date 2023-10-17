@@ -31,6 +31,9 @@ import { provideMessaging,getMessaging } from '@angular/fire/messaging';
 import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CustomerPopupComponent } from './customers/popups/customer-popup.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     CommunitiesComponent,
     NetworksComponent,
     UsersComponent,
-    RapidRespondersComponent
+    RapidRespondersComponent,
+    CustomerPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +61,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     ReactiveFormsModule,
     MatNativeDateModule,
     FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
     
