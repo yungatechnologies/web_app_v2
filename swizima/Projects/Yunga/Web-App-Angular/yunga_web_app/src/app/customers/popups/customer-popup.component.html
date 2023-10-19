@@ -1,6 +1,8 @@
-<h1 mat-dialog-title>Customer Form</h1>
-<div mat-dialog-content>
-    <form [formGroup]="myform" (ngSubmit)="save()">
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>Customer Form</h1>
+
+    <div mat-dialog-content>
+
         <p>
             <mat-form-field appearance="fill">
                 <mat-label>Surname</mat-label>
@@ -18,7 +20,7 @@
         <p>
             <mat-form-field appearance="fill">
                 <mat-label>Phone Number</mat-label>
-                <input matInput placeholder="Phone Number" required formControlName="phone"> 
+                <input matInput placeholder="Phone Number" required formControlName="phone">
             </mat-form-field>
         </p>
 
@@ -35,9 +37,11 @@
                 <input matInput placeholder="Address" required formControlName="address">
             </mat-form-field>
         </p>
-    </form>
-</div>
-<div mat-dialog-actions>
-    <button mat-button mat-dialog-close>No</button>
-    <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
-</div>
+
+
+    </div>
+    <div mat-dialog-actions>
+        <button  mat-raised-button color="primary">save</button>
+        <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+    </div>
+</form>
