@@ -16,21 +16,11 @@ export class CommonsService {
 
     }
 
-    async addDocument(collectionKey: string, data: any) {
+     addDocument(collectionKey: string, data: any) :Observable<DocumentData>{
 
-        console.log("adding Document ", data);
-
-        //let ref:DocumentReference<DocumentData> = await addDoc(collection(this.firestore, "collectionKey"),data);
-
-        const docRef = await addDoc(collection(this.firestore, collectionKey), {
-            name: "Fredrirk testing",
-            color: "Grean",
-            age: 5
-        });
-
-        console.log("Document written with ID: ", docRef.id);
-
-        //console.log(ref);
+        console.log("adding Document in::  ", collectionKey);
+        
+        return from(addDoc(collection(this.firestore, collectionKey),data));
     }
 
 }
