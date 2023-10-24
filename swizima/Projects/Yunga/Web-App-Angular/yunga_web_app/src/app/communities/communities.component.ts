@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommunitiesDto } from './communities.dto';
 import { CommonsService } from '../commons/commons.service';
 import { map } from 'rxjs/operators';
+import { CommunitiesPopupComponent } from './popups/communities-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-communities',
@@ -27,7 +29,7 @@ export class CommunitiesComponent implements AfterViewInit {
 
 
 
-    constructor(private commonsService: CommonsService) {
+    constructor(private commonsService: CommonsService,public dialog: MatDialog) {
         // this.myDiv.nativeElement.innerHTML = 'GALIWANGO'
         // Create 100 users
 
@@ -63,6 +65,12 @@ export class CommunitiesComponent implements AfterViewInit {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+    }
+
+    addNewCommunity(){
+        this.dialog.open(CommunitiesPopupComponent,{
+            width:'30%', 
+        });
     }
 
 }

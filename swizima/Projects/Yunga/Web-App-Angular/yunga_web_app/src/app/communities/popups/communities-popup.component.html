@@ -1,0 +1,37 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>New Community Enrollment Form</h1>
+
+    <div mat-dialog-content>
+
+        <!-- deviceNumber,serialNumber,phone,stage,status -->
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Community Name</mat-label>
+                <input matInput placeholder="Community Name" required formControlName="name">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>District</mat-label>
+                <input matInput placeholder="District" required formControlName="district">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select placeholder="Status" formControlName="status">
+                    <mat-option value="ROLLED_OUT">Rolled Out</mat-option>
+                    <mat-option value="NOT_ROLLED_OUT">Not Rolled Out</mat-option>
+                </mat-select> 
+            </mat-form-field>
+        </p> 
+
+    </div>
+    <div mat-dialog-actions>
+
+        <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+    </div>
+</form>

@@ -2,10 +2,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table'; 
+import { MatTableDataSource } from '@angular/material/table';
 import { map, of } from 'rxjs';
 import { CommonsService } from '../commons/commons.service';
 import { DeviceDto } from './devices.dto';
+import { MatDialog } from '@angular/material/dialog';
+import { DevicePopupComponent } from './popups/device-popup.component';
 
 @Component({
     selector: 'app-device',
@@ -14,7 +16,7 @@ import { DeviceDto } from './devices.dto';
 })
 export class DevicesComponent implements AfterViewInit {
 
-    displayedColumns: string[] = ['no','deviceNumber', 'serialNumber', 'phoneNumber', 'status', 'stage'];
+    displayedColumns: string[] = ['no', 'deviceNumber', 'serialNumber', 'phoneNumber', 'status', 'stage'];
 
     dataSource!: MatTableDataSource<DeviceDto>;
 
@@ -25,7 +27,7 @@ export class DevicesComponent implements AfterViewInit {
 
     devices!: DeviceDto[];
 
-    constructor(private commonsService: CommonsService) {
+    constructor(private commonsService: CommonsService, public dialog: MatDialog) {
         // this.myDiv.nativeElement.innerHTML = 'GALIWANGO'
         // Create 100 users
         //const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
@@ -66,6 +68,12 @@ export class DevicesComponent implements AfterViewInit {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+    }
+
+    addNewDevice() {
+        this.dialog.open(DevicePopupComponent, {
+            width: '30%',
+        });
     }
 
 }

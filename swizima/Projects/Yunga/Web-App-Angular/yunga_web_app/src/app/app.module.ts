@@ -34,6 +34,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CustomerPopupComponent } from './customers/popups/customer-popup.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { DevicePopupComponent } from './devices/popups/device-popup.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CommunitiesPopupComponent } from './communities/popups/communities-popup.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     NetworksComponent,
     UsersComponent,
     RapidRespondersComponent,
-    CustomerPopupComponent
+    CustomerPopupComponent,
+    DevicePopupComponent,
+    CommunitiesPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     FormsModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatSelectModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
     

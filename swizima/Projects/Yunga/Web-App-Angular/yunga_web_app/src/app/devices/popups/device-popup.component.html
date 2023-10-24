@@ -1,0 +1,69 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>New Device Enrollment Form</h1>
+
+    <div mat-dialog-content>
+
+        <!-- deviceNumber,serialNumber,phone,stage,status -->
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Device UUID Number</mat-label>
+                <input matInput placeholder="Device UUID Number" required formControlName="deviceNumber">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Device Serial Number</mat-label>
+                <input matInput placeholder="Device Serial Number" required formControlName="serialNumber">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Device SIM Card Number</mat-label>
+                <input matInput placeholder="Device SIM Card Number" required formControlName="phone">
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Stage</mat-label>
+                <!-- <input matInput placeholder="Stage" required formControlName="stage"> -->
+                <mat-select placeholder="Stage" formControlName="stage">
+                    <mat-option value="READY">Ready</mat-option>
+                    <mat-option value="PENDING">Pending</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <!-- <input matInput placeholder="Status" required formControlName="status"> -->
+                <mat-select placeholder="Status" formControlName="status">
+                    <mat-option value="INSTALLED">Installed </mat-option>
+                    <mat-option value="SHELVED">Shelved</mat-option>
+                    <mat-option value="TESTING">Testing</mat-option>
+                    <mat-option value="MAINTENENCE">Maitenence</mat-option>
+                    <mat-option value="RETIRED">Retired</mat-option>
+                </mat-select>
+
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Coordinates</mat-label>
+                <input matInput placeholder="Address" required formControlName="address">
+
+            </mat-form-field>
+        </p>
+
+
+    </div>
+    <div mat-dialog-actions>
+
+        <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+        <button mat-raised-button color="primary">Submit</button>
+    </div>
+</form>
