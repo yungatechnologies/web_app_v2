@@ -37,6 +37,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { DevicePopupComponent } from './devices/popups/device-popup.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommunitiesPopupComponent } from './communities/popups/communities-popup.component';
+import { NetworksPopupComponent } from './networks/popups/networks-popup.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { CommunitiesPopupComponent } from './communities/popups/communities-popu
     RapidRespondersComponent,
     CustomerPopupComponent,
     DevicePopupComponent,
-    CommunitiesPopupComponent
+    CommunitiesPopupComponent,
+    NetworksPopupComponent
   ],
   imports: [
     BrowserModule,
