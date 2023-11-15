@@ -20,24 +20,20 @@ import { CommunitiesComponent } from './communities/communities.component';
 import { NetworksComponent } from './networks/networks.component';
 import { UsersComponent } from './users/users.component';
 import { RapidRespondersComponent } from './rapid-responders/rapid-responder.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging';
-import { providePerformance,getPerformance } from '@angular/fire/performance';
-import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
-import { provideStorage,getStorage } from '@angular/fire/storage';
-import {MatDialogModule} from '@angular/material/dialog';
+import { ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CustomerPopupComponent } from './customers/popups/customer-popup.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { DevicePopupComponent } from './devices/popups/device-popup.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommunitiesPopupComponent } from './communities/popups/communities-popup.component';
 import { NetworksPopupComponent } from './networks/popups/networks-popup.component';
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import exporting from 'highcharts/modules/exporting.src';
+import more from 'highcharts/highcharts-more.src';
 
 @NgModule({
   declarations: [
@@ -71,13 +67,15 @@ import { NetworksPopupComponent } from './networks/popups/networks-popup.compone
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
+    ChartModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
-    
+
   ],
   providers: [
-  
-    ScreenTrackingService,UserTrackingService
+
+    ScreenTrackingService, UserTrackingService,
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [more, exporting] }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
+
 import { Injectable } from '@angular/core';
-import { DocumentData, DocumentReference, Firestore, QuerySnapshot, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
-import { Observable, flatMap, from, map, mergeMap } from 'rxjs';
+import { DocumentData, Firestore, addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { Observable, from, map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +17,11 @@ export class CommonsService {
 
     }
 
-     addDocument(collectionKey: string, data: any) :Observable<DocumentData>{
+    addDocument(collectionKey: string, data: any): Observable<DocumentData> {
 
         console.log("adding Document in::  ", collectionKey);
-        
-        return from(addDoc(collection(this.firestore, collectionKey),data));
+
+        return from(addDoc(collection(this.firestore, collectionKey), data));
     }
 
 }
