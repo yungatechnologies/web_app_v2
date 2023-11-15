@@ -31,6 +31,9 @@ import { DevicePopupComponent } from './devices/popups/device-popup.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CommunitiesPopupComponent } from './communities/popups/communities-popup.component';
 import { NetworksPopupComponent } from './networks/popups/networks-popup.component';
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import exporting from 'highcharts/modules/exporting.src';
+import more from 'highcharts/highcharts-more.src';
 
 @NgModule({
   declarations: [
@@ -64,13 +67,15 @@ import { NetworksPopupComponent } from './networks/popups/networks-popup.compone
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
+    ChartModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
 
   ],
   providers: [
 
-    ScreenTrackingService, UserTrackingService
+    ScreenTrackingService, UserTrackingService,
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [more, exporting] }
   ],
   bootstrap: [AppComponent]
 })
