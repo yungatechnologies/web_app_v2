@@ -7,6 +7,7 @@ import { CommunitiesComponent } from './communities/communities.component';
 import { NetworksComponent } from './networks/networks.component';
 import { UsersComponent } from './users/users.component';
 import { RapidRespondersComponent } from './rapid-responders/rapid-responder.component';
+import { DeviceListComponent } from './dashboard/device-list/device-list.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -16,10 +17,11 @@ const routes: Routes = [
   { path: 'communities', component: CommunitiesComponent },
   { path: 'networks', component: NetworksComponent },
   { path: 'users', component: UsersComponent },
-  { path: 'rapid_responders', component: RapidRespondersComponent }
+  { path: 'rapid_responders', component: RapidRespondersComponent },
+  { path: 'dashboard/device_list', component: DeviceListComponent }
 
   
- 
+
 ];
 
 @NgModule({

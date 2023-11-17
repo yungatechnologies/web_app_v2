@@ -34,6 +34,8 @@ import { NetworksPopupComponent } from './networks/popups/networks-popup.compone
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import exporting from 'highcharts/modules/exporting.src';
 import more from 'highcharts/highcharts-more.src';
+import { MatButton } from '@angular/material/button';
+import { DeviceListComponent } from './dashboard/device-list/device-list.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import more from 'highcharts/highcharts-more.src';
     CustomerPopupComponent,
     DevicePopupComponent,
     CommunitiesPopupComponent,
-    NetworksPopupComponent
+    NetworksPopupComponent,
+    DeviceListComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,7 @@ import more from 'highcharts/highcharts-more.src';
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
-    ChartModule,
+    ChartModule, 
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
 

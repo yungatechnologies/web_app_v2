@@ -1,60 +1,76 @@
-<div class="flex flex-col justify-evenly">
+<div class="flex flex-col bg-gray-100 justify-evenly">
 
-  <div class="flex w-5/5 m-1 justify-evenly">
-    <div class="   w-1/5">
-      <mat-card class="h-40">
+  <div class="flex m-1 mt-5 w-5/5 justify-evenly">
+    <div class="w-1/5 ">
+      <mat-card class="h-60 rounded-xl">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Total Installed: 112 </mat-card-title>
+            <mat-card-title>Device Status</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p>Online:</p>
-          <p>Offline:</p>
-          <p>Testing:</p>
+          <p><span mat-flat-button routerLink="device_list">Total Installed:
+              {{installedDevices|number}}</span></p>
+          <p><span><a mat-flat-button href="" target="_blank"> Online: {{onlineDevices|number}}</a></span></p>
+          <p> <span><a mat-flat-button href="" target="_blank">Offline: {{offlineDevices|number}}</a></span></p>
+          <p><span><a mat-flat-button href="" target="_blank">Testing: {{testingDevices|number}}
+              </a></span></p>
         </mat-card-content>
       </mat-card>
 
     </div>
 
-    <div class="  w-1/5">
+    <div class="w-1/5 ">
 
-      <mat-card class="h-40">
+      <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Total Armed: 4 </mat-card-title>
+            <mat-card-title>Security status</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p>Full Arm:</p>
-          <p>Half Arm:</p>
-          <p>Disarmed:</p>
+          <p><span><a mat-flat-button href="" target="_blank">Total Armed: {{armedDevices|number}}</a></span></p>
+          <p><span><a mat-flat-button href="" target="_blank">Full Arm: {{fullArmedDevices|number}}</a></span></p>
+          <p><span><a mat-flat-button href="" target="_blank">Half Arm:{{halfArmedDevices|number}}</a></span></p>
+          <p><span><a mat-flat-button href=""
+                target="_blank">Disarmed:{{(installedDevices-armedDevices)|number}}</a></span></p>
         </mat-card-content>
       </mat-card>
 
     </div>
-    <div class="  w-1/5">
-      <mat-card class="h-40">
+    <div class="w-1/5 ">
+      <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Alarms: 2023-11-12 Mid-night</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
+          <p class="p-0 m-0 h-14">
+            <mat-form-field>
+              <input matInput type="date" [(ngModel)]="value" class="p-0 text-sm bg-black">
+            </mat-form-field>
+          </p>
+          <p>False:</p>
           <p>Panic:</p>
           <p>Community:</p>
-          <p>False:</p>
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="  w-1/5">
-      <mat-card class="h-40">
+    <div class="w-1/5 ">
+      <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Doorbells</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
+          <p class="p-0 m-0 h-14">
+            <mat-form-field>
+              <input matInput type="date" [(ngModel)]="value">
+            </mat-form-field>
+          </p>
+
           <p>Triggered</p>
           <p>Acknowledged</p>
         </mat-card-content>
@@ -63,14 +79,16 @@
 
   </div>
 
-  <div class="flex flex-row w-5/5  m-1 justify-start">
+  <div class="flex flex-row justify-start gap-5 m-1 mt-6 w-5/5">
 
-     
-       <div [chart]="chart1"></div> 
-      
-      <div [chart]="chart2"></div>
-     
-     
+
+    <div [chart]="chart1"></div>
+
+    <div [chart]="chart2"></div>
+
+
   </div>
+
+  <app-device-list [devicesDetailsList]="devicesDetailsList"></app-device-list>
 
 </div>
