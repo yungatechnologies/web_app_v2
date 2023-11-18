@@ -4,6 +4,8 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Chart } from 'angular-highcharts';
 import { CommonsService } from '../commons/commons.service';
 import { DeviceDto, DeviceStatusDto } from '../devices/devices.dto';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,10 +37,17 @@ export class DashboardComponent {
   halfArmedDevices!: number;
 
 
-  devicesDetailsList: DeviceDto[] = [];
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private commonsService: CommonsService,
+    private route: ActivatedRoute, private router: Router,
+    private dashboardService: DashboardService
 
+  ) { }
 
-  constructor(private breakpointObserver: BreakpointObserver, private commonsService: CommonsService) { }
+  loadOnlineDevices() {
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
 
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -239,9 +248,18 @@ export class DashboardComponent {
 
           this.onlineTestingDevices = onlineTestingDevicesArray.length;
 
-          this.devicesDetailsList = installedDevicesArray;
+          this.dashboardService.onlineDevicesSubject.next(installedDevicesArray);
 
-          console.log('devicesDetailsList:: ' + this.devicesDetailsList.length);
+          console.log('===================installedDevicesArray===================:: ' + installedDevicesArray.length);
+
+          this.dashboardService.onlineDevicesSubject.subscribe(
+            {
+              next: response => {
+                console.log('===================onlineDevicesSubject===================:: ' + response.length);
+              }
+            }
+          );
+
 
 
         },
