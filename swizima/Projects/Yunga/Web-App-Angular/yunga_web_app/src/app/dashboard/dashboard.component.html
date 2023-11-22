@@ -1,76 +1,107 @@
-<div class="flex flex-col justify-evenly">
+<div class="flex flex-col bg-gray-100 justify-evenly">
 
-  <div class="flex w-5/5 m-1 justify-evenly">
-    <div class="   w-1/5">
-      <mat-card class="h-40">
+  <div class="flex m-1 mt-5 w-5/5 justify-evenly">
+    <div class="w-1/5 ">
+      <mat-card class="h-60 rounded-xl">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Total Installed: 112 </mat-card-title>
+            <mat-card-title>Device Status</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p>Online:</p>
-          <p>Offline:</p>
-          <p>Testing:</p>
+          <p><button mat-flat-button color="warn" (click)="loadInstalledDevices()">Total Installed:
+              {{installedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadOnlineDevices()"> Online:
+              {{onlineDevices|number}}</button></p>
+          <p> <button mat-flat-button color="accent" (click)="loadOfflineDevices()">Offline:
+              {{offlineDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadTestingDevices()">Testing: {{testingDevices|number}}
+            </button></p>
         </mat-card-content>
       </mat-card>
 
     </div>
 
-    <div class="  w-1/5">
+    <div class="w-1/5 ">
 
-      <mat-card class="h-40">
+      <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Total Armed: 4 </mat-card-title>
+            <mat-card-title>Security status</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p>Full Arm:</p>
-          <p>Half Arm:</p>
-          <p>Disarmed:</p>
+          <p><button mat-flat-button color="warn" (click)="loadArmedDevices()">Total Armed:
+              {{armedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadHalfArmedDevices()">Full Arm:
+              {{fullArmedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadFullArmedDevices()">Half
+              Arm:{{halfArmedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent"
+              (click)="loaddDisArmedDevices()">Disarmed:{{(installedDevices-armedDevices)|number}}</button></p>
         </mat-card-content>
       </mat-card>
 
     </div>
-    <div class="  w-1/5">
-      <mat-card class="h-40">
+    <div class="w-1/5 ">
+      <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Alarms: 2023-11-12 Mid-night</mat-card-title>
+            <mat-card-title>Alarms: {{alarmDate}} Mid-night</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
+          <p class="p-0 m-0 h-14">
+            <mat-form-field>
+              <mat-label>Select Date</mat-label>
+              <!-- <mat-hint>MM/DD/YYYY</mat-hint> (dateInput)="alarmInputDateChanged('input', $event)"-->
+              <input matInput [matDatepicker]="picker" (dateChange)="alarmDateChanged('change', $event)">
+
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </p>
+          <p class="w-40 p-1 bg-red-700 rounded-sm text-yellow-50">Trigered: <span class="ml-10 font-bold">{{totalAlarms.length}}</span></p>
+          <p>False:</p>
           <p>Panic:</p>
           <p>Community:</p>
-          <p>False:</p>
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="  w-1/5">
-      <mat-card class="h-40">
+    <div class="w-1/5 ">
+      <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Doorbells</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p>Triggered</p>
-          <p>Acknowledged</p>
+          <p class="p-0 m-0 h-14">
+            <mat-form-field>
+              <mat-label>Select Date</mat-label>
+              <!-- <mat-hint>MM/DD/YYYY</mat-hint> (dateInput)="doorbellDateInputChanged('input', $event)" -->
+              <input matInput [matDatepicker]="picker2" (dateChange)="doorbellDateChanged('change', $event)">
+              <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </p>
+
+          <p class="w-40 p-1 bg-green-900 rounded-sm text-yellow-50">Triggered: <span class="ml-10 font-bold">{{triggeredDoorBells.length}}</span></p>
+          <p class="w-40 p-1 bg-orange-600 rounded-sm text-yellow-50">Acknowledged: <span class="ml-5 font-bold">{{acknowledgedDoorBells.length}}</span></p>
         </mat-card-content>
       </mat-card>
     </div>
 
   </div>
 
-  <div class="flex flex-row w-5/5  m-1 justify-start">
+  <div class="flex flex-row justify-start gap-5 m-1 mt-6 w-5/5">
 
-     
-       <div [chart]="chart1"></div> 
-      
-      <div [chart]="chart2"></div>
-     
-     
+
+    <div [chart]="chart1"></div>
+
+    <div [chart]="chart2"></div>
+
+
   </div>
 
 </div>

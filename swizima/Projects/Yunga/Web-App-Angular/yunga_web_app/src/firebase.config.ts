@@ -1,6 +1,5 @@
 export const FirebaseConfig = {
 
-
     firebase: {      
         projectId: 'yunga-232719',
         appId: '1:669995979121:web:7c3b429ea7fbbabc6da6d0',
