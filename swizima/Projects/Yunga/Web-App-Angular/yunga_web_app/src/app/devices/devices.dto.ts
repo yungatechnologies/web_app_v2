@@ -36,3 +36,18 @@ export interface DoorBellDto {
     result: number
     userId: string
 }
+
+export interface AlarmDto {
+    action: number;
+    address: string;
+    date: Timestamp;
+    deviceNumber: string;
+    id: string;
+    name: string;
+    network: string;
+    receipts: string[];
+    respondent: string;
+    responses: any[];
+    userPhone: string;
+    source:string;
+}

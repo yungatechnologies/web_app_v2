@@ -54,6 +54,19 @@ export class CommonsService {
 
     }
 
+
+    getAlarmsByDate(collectionKey: string, date: string): Observable<DocumentData[]> {
+        
+        return from(getDocs(
+            query(collection(this.firestore, collectionKey),
+                and(where("date", ">", new Date(`${date} 00:00`)),
+                    where("date", "<=", new Date(`${date} 23:59`)))
+
+            )))
+            .pipe(map(querySnaphot => querySnaphot.docs.map(D => D.data())))
+
+    }
+
 }
 
 

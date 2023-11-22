@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Chart } from 'angular-highcharts';
 import { CommonsService } from '../commons/commons.service';
-import { DeviceDto, DeviceStatusDto, DoorBellDto } from '../devices/devices.dto';
+import { AlarmDto, DeviceDto, DeviceStatusDto, DoorBellDto } from '../devices/devices.dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from './dashboard.service';
 //import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -48,7 +48,13 @@ export class DashboardComponent {
   halfArmedDevicesArray: DeviceStatusDto[] = [];
   fullArmedDevicesArray: DeviceStatusDto[] = [];
 
-  triggeredDoorBells:DoorBellDto[]=[];
+  triggeredDoorBells: DoorBellDto[] = [];
+
+  acknowledgedDoorBells: DoorBellDto[] = [];
+
+  totalAlarms: AlarmDto[] = [];
+
+  alarmDate!: string;
 
 
   constructor(
@@ -89,6 +95,8 @@ export class DashboardComponent {
     this.getDeviceStatus();
 
     this.defaultDoorbell();
+
+    this.defautAlarms();
 
     this.innerWidth = window.innerWidth;
     let columnChartColors1 = ['#00A4EF', '#b1f160', '#FFC300'];
@@ -395,7 +403,17 @@ export class DashboardComponent {
 
     console.log('alarmDateChanged', event.value?.getDate());
 
-    //this.events.push(`${type}: ${event.value}`);
+    let day = event.value?.getDate();
+    let month = event.value!.getMonth();
+    let convertedMonth = month + 1;
+    let year = event.value?.getFullYear();
+
+    let date: string = year + '-' + convertedMonth + '-' + day;
+
+    console.log('doorbells', date);
+
+    this.loadAlarmsByDate(date);
+
   }
 
   doorbellDateInputChanged(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -414,30 +432,13 @@ export class DashboardComponent {
 
     console.log('doorbells', date);
 
-    this.commonsService.getDoorBellsByDate('doorbells', date).pipe(map(data => data as DoorBellDto[]))
-      .subscribe({
-        next: response => {
-
-          this.triggeredDoorBells=response;
-          //console.log(response);
-          this.triggeredDoorBells.forEach(element => {
-            console.log(element.deviceNumber, element.date.toDate());
-
-            
-          });
-        },
-        error: error => {
-
-          console.log(error);
-        }
-
-      });
+    this.loadDoorBellByDate(date);
   }
 
 
   defaultDoorbell() {
 
-    let today=new Date();
+    let today = new Date();
     let day = today.getDate();
     let month = today.getMonth();
     let convertedMonth = month + 1;
@@ -447,17 +448,41 @@ export class DashboardComponent {
 
     console.log('doorbells', date);
 
+    this.loadDoorBellByDate(date);
+
+
+
+  }
+
+  defautAlarms() {
+
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth();
+    let convertedMonth = month + 1;
+    let year = today.getFullYear();
+
+    let date: string = year + '-' + convertedMonth + '-' + day;
+
+    console.log('Todays Alarms', date);
+
+    this.loadAlarmsByDate(date);
+
+  }
+
+  loadDoorBellByDate(date: string) {
+
     this.commonsService.getDoorBellsByDate('doorbells', date).pipe(map(data => data as DoorBellDto[]))
       .subscribe({
         next: response => {
 
-          this.triggeredDoorBells=response;
-          //console.log(response);
+          this.triggeredDoorBells = response;
+          this.loadAcknledgedDoorBell(this.triggeredDoorBells);
+
           this.triggeredDoorBells.forEach(element => {
             console.log(element.deviceNumber, element.date.toDate());
-
-            
           });
+
         },
         error: error => {
 
@@ -465,6 +490,42 @@ export class DashboardComponent {
         }
 
       });
+
+  }
+
+
+  loadAcknledgedDoorBell(doorbells: DoorBellDto[]) {
+
+    this.acknowledgedDoorBells = [];
+
+    this.acknowledgedDoorBells = doorbells.filter(doorBell => doorBell.action === 4);
+
+
+  }
+
+
+  loadAlarmsByDate(date: string) {
+
+    this.commonsService.getAlarmsByDate('alarms', date).pipe(map(data => data as AlarmDto[]))
+      .subscribe({
+        next: response => {
+
+          this.totalAlarms = response;
+
+          //this.loadAcknledgedDoorBell(this.triggeredDoorBells);
+
+          this.totalAlarms.forEach(element => {
+            console.log(element.deviceNumber, element.date.toDate());
+          });
+
+        },
+        error: error => {
+
+          console.log(error);
+        }
+
+      });
+
   }
 
 }

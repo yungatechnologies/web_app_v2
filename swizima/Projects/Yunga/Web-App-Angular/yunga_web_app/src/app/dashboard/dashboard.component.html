@@ -47,7 +47,7 @@
       <mat-card class="h-60">
         <mat-card-header>
           <mat-card-title-group>
-            <mat-card-title>Alarms: 2023-11-12 Mid-night</mat-card-title>
+            <mat-card-title>Alarms: {{alarmDate}} Mid-night</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
@@ -61,6 +61,7 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </p>
+          <p class="w-40 p-1 bg-red-700 rounded-sm text-yellow-50">Trigered: <span class="ml-10 font-bold">{{totalAlarms.length}}</span></p>
           <p>False:</p>
           <p>Panic:</p>
           <p>Community:</p>
@@ -85,8 +86,8 @@
             </mat-form-field>
           </p>
 
-          <p class="w-40 p-1 bg-green-900 rounded-sm text-yellow-50">Triggered: {{triggeredDoorBells.length}}</p>
-          <p>Acknowledged</p>
+          <p class="w-40 p-1 bg-green-900 rounded-sm text-yellow-50">Triggered: <span class="ml-10 font-bold">{{triggeredDoorBells.length}}</span></p>
+          <p class="w-40 p-1 bg-orange-600 rounded-sm text-yellow-50">Acknowledged: <span class="ml-5 font-bold">{{acknowledgedDoorBells.length}}</span></p>
         </mat-card-content>
       </mat-card>
     </div>
