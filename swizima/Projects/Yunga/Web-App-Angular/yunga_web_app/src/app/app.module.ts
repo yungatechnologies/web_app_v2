@@ -36,6 +36,7 @@ import exporting from 'highcharts/modules/exporting.src';
 import more from 'highcharts/highcharts-more.src';
 import { MatButton } from '@angular/material/button';
 import { DeviceListComponent } from './dashboard/device-list/device-list.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { DeviceListComponent } from './dashboard/device-list/device-list.compone
     MatFormFieldModule,
     MatSelectModule,
     ChartModule, 
+    MatDatepickerModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
 

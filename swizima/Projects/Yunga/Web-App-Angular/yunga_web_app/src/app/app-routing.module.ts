@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'networks', component: NetworksComponent },
   { path: 'users', component: UsersComponent },
   { path: 'rapid_responders', component: RapidRespondersComponent },
-  { path: 'dashboard/device_list', component: DeviceListComponent }
+  //{ path: 'dashboard/device_list', component: DeviceListComponent },
+  { path: 'device_list', component: DeviceListComponent }
 
   
 

@@ -9,12 +9,14 @@
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p><span mat-flat-button routerLink="device_list">Total Installed:
-              {{installedDevices|number}}</span></p>
-          <p><span><a mat-flat-button href="" target="_blank"> Online: {{onlineDevices|number}}</a></span></p>
-          <p> <span><a mat-flat-button href="" target="_blank">Offline: {{offlineDevices|number}}</a></span></p>
-          <p><span><a mat-flat-button href="" target="_blank">Testing: {{testingDevices|number}}
-              </a></span></p>
+          <p><button mat-flat-button color="warn" (click)="loadInstalledDevices()">Total Installed:
+              {{installedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadOnlineDevices()"> Online:
+              {{onlineDevices|number}}</button></p>
+          <p> <button mat-flat-button color="accent" (click)="loadOfflineDevices()">Offline:
+              {{offlineDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadTestingDevices()">Testing: {{testingDevices|number}}
+            </button></p>
         </mat-card-content>
       </mat-card>
 
@@ -29,11 +31,14 @@
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <p><span><a mat-flat-button href="" target="_blank">Total Armed: {{armedDevices|number}}</a></span></p>
-          <p><span><a mat-flat-button href="" target="_blank">Full Arm: {{fullArmedDevices|number}}</a></span></p>
-          <p><span><a mat-flat-button href="" target="_blank">Half Arm:{{halfArmedDevices|number}}</a></span></p>
-          <p><span><a mat-flat-button href=""
-                target="_blank">Disarmed:{{(installedDevices-armedDevices)|number}}</a></span></p>
+          <p><button mat-flat-button color="warn" (click)="loadArmedDevices()">Total Armed:
+              {{armedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadHalfArmedDevices()">Full Arm:
+              {{fullArmedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent" (click)="loadFullArmedDevices()">Half
+              Arm:{{halfArmedDevices|number}}</button></p>
+          <p><button mat-flat-button color="accent"
+              (click)="loaddDisArmedDevices()">Disarmed:{{(installedDevices-armedDevices)|number}}</button></p>
         </mat-card-content>
       </mat-card>
 
@@ -48,7 +53,12 @@
         <mat-card-content>
           <p class="p-0 m-0 h-14">
             <mat-form-field>
-              <input matInput type="date" [(ngModel)]="value" class="p-0 text-sm bg-black">
+              <mat-label>Select Date</mat-label>
+              <!-- <mat-hint>MM/DD/YYYY</mat-hint> (dateInput)="alarmInputDateChanged('input', $event)"-->
+              <input matInput [matDatepicker]="picker" (dateChange)="alarmDateChanged('change', $event)">
+
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </p>
           <p>False:</p>
@@ -67,11 +77,15 @@
         <mat-card-content>
           <p class="p-0 m-0 h-14">
             <mat-form-field>
-              <input matInput type="date" [(ngModel)]="value">
+              <mat-label>Select Date</mat-label>
+              <!-- <mat-hint>MM/DD/YYYY</mat-hint> (dateInput)="doorbellDateInputChanged('input', $event)" -->
+              <input matInput [matDatepicker]="picker2" (dateChange)="doorbellDateChanged('change', $event)">
+              <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </p>
 
-          <p>Triggered</p>
+          <p class="w-40 p-1 bg-green-900 rounded-sm text-yellow-50">Triggered: {{triggeredDoorBells.length}}</p>
           <p>Acknowledged</p>
         </mat-card-content>
       </mat-card>
@@ -87,6 +101,6 @@
     <div [chart]="chart2"></div>
 
 
-  </div> 
+  </div>
 
 </div>

@@ -3,9 +3,11 @@ import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Chart } from 'angular-highcharts';
 import { CommonsService } from '../commons/commons.service';
-import { DeviceDto, DeviceStatusDto } from '../devices/devices.dto';
+import { DeviceDto, DeviceStatusDto, DoorBellDto } from '../devices/devices.dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from './dashboard.service';
+//import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +39,18 @@ export class DashboardComponent {
   halfArmedDevices!: number;
 
 
+  installedDevicesArray: DeviceDto[] = [];
+  onlineDevicesArray: DeviceDto[] = [];
+  offlineDevicesArray: DeviceDto[] = [];
+  testingDevicesArray: DeviceDto[] = [];
+
+  armedDevicesArray: DeviceStatusDto[] = [];
+  halfArmedDevicesArray: DeviceStatusDto[] = [];
+  fullArmedDevicesArray: DeviceStatusDto[] = [];
+
+  triggeredDoorBells:DoorBellDto[]=[];
+
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private commonsService: CommonsService,
@@ -44,10 +58,6 @@ export class DashboardComponent {
     private dashboardService: DashboardService
 
   ) { }
-
-  loadOnlineDevices() {
-    this.router.navigate(['device_list'], { relativeTo: this.route });
-  }
 
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -77,6 +87,8 @@ export class DashboardComponent {
     this.getDeviceStatistics();
 
     this.getDeviceStatus();
+
+    this.defaultDoorbell();
 
     this.innerWidth = window.innerWidth;
     let columnChartColors1 = ['#00A4EF', '#b1f160', '#FFC300'];
@@ -233,33 +245,20 @@ export class DashboardComponent {
 
           let devices: DeviceDto[] = response;
           //INSTALLED
-          let installedDevicesArray: DeviceDto[] = devices.filter(d => d.status === 'INSTALLED');
 
-          let onlineDevicesArray: DeviceDto[] = devices.filter(d => d.online && d.status === 'INSTALLED');
-          let offlineDevicesArray: DeviceDto[] = devices.filter(d => !d.online && d.status === 'INSTALLED');
 
-          let onlineTestingDevicesArray: DeviceDto[] = devices.filter(d => d.online && d.status !== 'INSTALLED');
+          this.installedDevicesArray = devices.filter(d => d.status === 'INSTALLED');
+          this.onlineDevicesArray = devices.filter(d => d.online && d.status === 'INSTALLED');
+          this.offlineDevicesArray = devices.filter(d => !d.online && d.status === 'INSTALLED');
+          this.testingDevicesArray = devices.filter(d => d.online && d.status !== 'INSTALLED');
 
-          this.installedDevices = installedDevicesArray.length;
+          this.installedDevices = this.installedDevicesArray.length;
           this.testingDevices = (devices.length - this.installedDevices);
 
-          this.onlineDevices = onlineDevicesArray.length;
-          this.offlineDevices = offlineDevicesArray.length;
+          this.onlineDevices = this.onlineDevicesArray.length;
+          this.offlineDevices = this.offlineDevicesArray.length;
 
-          this.onlineTestingDevices = onlineTestingDevicesArray.length;
-
-          this.dashboardService.onlineDevicesSubject.next(installedDevicesArray);
-
-          console.log('===================installedDevicesArray===================:: ' + installedDevicesArray.length);
-
-          this.dashboardService.onlineDevicesSubject.subscribe(
-            {
-              next: response => {
-                console.log('===================onlineDevicesSubject===================:: ' + response.length);
-              }
-            }
-          );
-
+          this.onlineTestingDevices = this.testingDevicesArray.length;
 
 
         },
@@ -277,15 +276,17 @@ export class DashboardComponent {
 
           let deviceStatus: DeviceStatusDto[] = response;
           //INSTALLED
-          let armedDevicesArray: DeviceStatusDto[] = deviceStatus.filter(d => d.armed != 0);
-          let halfArmedDevicesArray: DeviceStatusDto[] = deviceStatus.filter(d => d.armed === 1);
-          let fullArmedDevicesArray: DeviceStatusDto[] = deviceStatus.filter(d => d.armed === 2);
+
+
+          this.armedDevicesArray = deviceStatus.filter(d => d.armed != 0);
+          this.halfArmedDevicesArray = deviceStatus.filter(d => d.armed === 1);
+          this.fullArmedDevicesArray = deviceStatus.filter(d => d.armed === 2);
 
           let onlineDevicesArray: DeviceStatusDto[] = deviceStatus.filter(d => d.armed === 2);
 
-          this.armedDevices = armedDevicesArray.length;
-          this.halfArmedDevices = halfArmedDevicesArray.length;
-          this.fullArmedDevices = fullArmedDevicesArray.length;
+          this.armedDevices = this.armedDevicesArray.length;
+          this.halfArmedDevices = this.halfArmedDevicesArray.length;
+          this.fullArmedDevices = this.fullArmedDevicesArray.length;
 
 
         },
@@ -294,5 +295,176 @@ export class DashboardComponent {
 
   }
 
+
+  loadInstalledDevices() {
+    this.dashboardService.onlineDevicesSubject.next(this.installedDevicesArray);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  loadOnlineDevices() {
+    this.dashboardService.onlineDevicesSubject.next(this.onlineDevicesArray);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  loadOfflineDevices() {
+    this.dashboardService.onlineDevicesSubject.next(this.offlineDevicesArray);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  loadTestingDevices() {
+    this.dashboardService.onlineDevicesSubject.next(this.testingDevicesArray);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+
+
+  loadArmedDevices() {
+
+    let armedDevices: DeviceDto[] = [];
+
+    this.installedDevicesArray.forEach(element => {
+      if (this.deviceExists(this.armedDevicesArray, element.deviceNumber)) {
+        armedDevices.push(element);
+      }
+    });
+
+
+    this.dashboardService.onlineDevicesSubject.next(armedDevices);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  loadHalfArmedDevices() {
+
+    let halfArmedDevices: DeviceDto[] = [];
+
+    this.installedDevicesArray.forEach(element => {
+      if (this.deviceExists(this.halfArmedDevicesArray, element.deviceNumber)) {
+        halfArmedDevices.push(element);
+      }
+    });
+
+    this.dashboardService.onlineDevicesSubject.next(halfArmedDevices);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  loadFullArmedDevices() {
+
+    let fullArmedDevices: DeviceDto[] = [];
+
+    this.installedDevicesArray.forEach(element => {
+      if (this.deviceExists(this.fullArmedDevicesArray, element.deviceNumber)) {
+        fullArmedDevices.push(element);
+      }
+    });
+
+    this.dashboardService.onlineDevicesSubject.next(fullArmedDevices);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  loaddDisArmedDevices() {
+
+    let disarmTimermedDevices: DeviceDto[] = [];
+
+    this.installedDevicesArray.forEach(element => {
+      if (!this.deviceExists(this.armedDevicesArray, element.deviceNumber)) {
+        disarmTimermedDevices.push(element);
+      }
+    });
+
+    this.dashboardService.onlineDevicesSubject.next(disarmTimermedDevices);
+    this.router.navigate(['device_list'], { relativeTo: this.route });
+  }
+
+  deviceExists(devicesStatus: DeviceStatusDto[], deviceNumber: string): boolean {
+    let size = devicesStatus.filter(status => status.deviceNumber === deviceNumber).length;
+    if (size > 0) {
+      return true;
+    }
+    return false;
+  }
+
+
+  alarmInputDateChanged(type: string, event: MatDatepickerInputEvent<Date>) {
+
+    console.log('alarmDateChanged', event.value?.getDate());
+
+    //this.events.push(`${type}: ${event.value}`);
+  }
+
+  alarmDateChanged(type: string, event: MatDatepickerInputEvent<Date>) {
+
+    console.log('alarmDateChanged', event.value?.getDate());
+
+    //this.events.push(`${type}: ${event.value}`);
+  }
+
+  doorbellDateInputChanged(type: string, event: MatDatepickerInputEvent<Date>) {
+
+    console.log('doorbellDateInputChanged', event.value?.getDate());
+  }
+
+  doorbellDateChanged(type: string, event: MatDatepickerInputEvent<Date>) {
+
+    let day = event.value?.getDate();
+    let month = event.value!.getMonth();
+    let convertedMonth = month + 1;
+    let year = event.value?.getFullYear();
+
+    let date: string = year + '-' + convertedMonth + '-' + day;
+
+    console.log('doorbells', date);
+
+    this.commonsService.getDoorBellsByDate('doorbells', date).pipe(map(data => data as DoorBellDto[]))
+      .subscribe({
+        next: response => {
+
+          this.triggeredDoorBells=response;
+          //console.log(response);
+          this.triggeredDoorBells.forEach(element => {
+            console.log(element.deviceNumber, element.date.toDate());
+
+            
+          });
+        },
+        error: error => {
+
+          console.log(error);
+        }
+
+      });
+  }
+
+
+  defaultDoorbell() {
+
+    let today=new Date();
+    let day = today.getDate();
+    let month = today.getMonth();
+    let convertedMonth = month + 1;
+    let year = today.getFullYear();
+
+    let date: string = year + '-' + convertedMonth + '-' + day;
+
+    console.log('doorbells', date);
+
+    this.commonsService.getDoorBellsByDate('doorbells', date).pipe(map(data => data as DoorBellDto[]))
+      .subscribe({
+        next: response => {
+
+          this.triggeredDoorBells=response;
+          //console.log(response);
+          this.triggeredDoorBells.forEach(element => {
+            console.log(element.deviceNumber, element.date.toDate());
+
+            
+          });
+        },
+        error: error => {
+
+          console.log(error);
+        }
+
+      });
+  }
 
 }

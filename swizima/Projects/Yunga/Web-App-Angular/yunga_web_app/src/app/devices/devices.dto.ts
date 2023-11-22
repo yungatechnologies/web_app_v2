@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface DeviceDto {
     id: string;
     stage: string;
@@ -22,4 +24,15 @@ export interface DeviceStatusDto {
     siren: boolean;
     strobeLight: boolean;
     autoArm: boolean;
+}
+
+export interface DoorBellDto {
+    action: number
+    date: Timestamp
+    deviceNumber: string
+    guest: string
+    id: string
+    note: string
+    result: number
+    userId: string
 }
