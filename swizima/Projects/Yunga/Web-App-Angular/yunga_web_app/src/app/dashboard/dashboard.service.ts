@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
-import { DeviceDto } from "../devices/devices.dto";
+import { AlarmDto, DeviceDto, DoorBellDto } from "../devices/devices.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -8,5 +8,9 @@ import { DeviceDto } from "../devices/devices.dto";
 export class DashboardService {
 
     onlineDevicesSubject = new BehaviorSubject<DeviceDto[]>([]);
+
+    deviceAlarmSubject = new BehaviorSubject<AlarmDto[]>([]);
+
+    deviceDoorbellSubject = new BehaviorSubject<DoorBellDto[]>([]);
 
 }

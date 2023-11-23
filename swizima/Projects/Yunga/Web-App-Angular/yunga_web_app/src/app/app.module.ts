@@ -37,6 +37,8 @@ import more from 'highcharts/highcharts-more.src';
 import { MatButton } from '@angular/material/button';
 import { DeviceListComponent } from './dashboard/device-list/device-list.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AlarmDetailsComponent } from './dashboard/alarm-details/alarm-details.component';
+import { DoorbellDetailsComponent } from './dashboard/doorbell-details/doorbell-details.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     DevicePopupComponent,
     CommunitiesPopupComponent,
     NetworksPopupComponent,
-    DeviceListComponent
+    DeviceListComponent,
+    AlarmDetailsComponent,
+    DoorbellDetailsComponent
   ],
   imports: [
     BrowserModule,
