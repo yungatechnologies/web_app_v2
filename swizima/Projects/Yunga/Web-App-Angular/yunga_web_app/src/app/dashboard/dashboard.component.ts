@@ -55,6 +55,7 @@ export class DashboardComponent {
   totalAlarms: AlarmDto[] = [];
 
   alarmDate!: string;
+  doorbellDate!: string;
 
 
   constructor(
@@ -411,8 +412,9 @@ export class DashboardComponent {
     let date: string = year + '-' + convertedMonth + '-' + day;
 
     console.log('doorbells', date);
-
+    this.alarmDate=date;
     this.loadAlarmsByDate(date);
+
 
   }
 
@@ -432,6 +434,8 @@ export class DashboardComponent {
 
     console.log('doorbells', date);
 
+    this.doorbellDate=date;
+
     this.loadDoorBellByDate(date);
   }
 
@@ -448,8 +452,11 @@ export class DashboardComponent {
 
     console.log('doorbells', date);
 
+    this.doorbellDate=date;
+
     this.loadDoorBellByDate(date);
 
+    
 
 
   }
@@ -466,7 +473,10 @@ export class DashboardComponent {
 
     console.log('Todays Alarms', date);
 
+    this.alarmDate=date;
+
     this.loadAlarmsByDate(date);
+
 
   }
 
@@ -527,5 +537,22 @@ export class DashboardComponent {
       });
 
   }
+ 
+  loadDeviceAlarmDetails() {
+    this.dashboardService.deviceAlarmSubject.next(this.totalAlarms);
+    this.router.navigate(['device_alarm_details'], { relativeTo: this.route });
+  }
+
+  loadDeviceDoorbellDetails() {
+    this.dashboardService.deviceDoorbellSubject.next(this.triggeredDoorBells);
+    this.router.navigate(['doorbell_details'], { relativeTo: this.route });
+  }
+
+  loadAcknowledgedDeviceDoorbellDetails() {
+    this.dashboardService.deviceDoorbellSubject.next(this.acknowledgedDoorBells);
+    this.router.navigate(['doorbell_details'], { relativeTo: this.route });
+  }
+
+  //
 
 }
