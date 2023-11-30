@@ -168,7 +168,7 @@ export class DashboardComponent {
         series: [
 
           {
-            name: 'Male',
+            name: 'Devices',
             type: 'column',
             data: [20, 30, 25, 50, 42, 84, 105, 104, 91, 83, 106, 0]
 
@@ -228,7 +228,7 @@ export class DashboardComponent {
         yAxis: {
           min: 0,
           title: {
-            text: 'Number of Teachers'
+            text: 'Number of Requests'
           }
         },
         series: [
