@@ -55,6 +55,7 @@ export class DashboardComponent {
   totalAlarms: AlarmDto[] = [];
 
   alarmDate!: string;
+  doorbellDate!: string;
 
 
   constructor(
@@ -92,7 +93,7 @@ export class DashboardComponent {
 
     this.getDeviceStatistics();
 
-    this.getDeviceStatus();
+    //this.getDeviceStatus();
 
     this.defaultDoorbell();
 
@@ -167,7 +168,7 @@ export class DashboardComponent {
         series: [
 
           {
-            name: 'Male',
+            name: 'Devices',
             type: 'column',
             data: [20, 30, 25, 50, 42, 84, 105, 104, 91, 83, 106, 0]
 
@@ -227,7 +228,7 @@ export class DashboardComponent {
         yAxis: {
           min: 0,
           title: {
-            text: 'Number of Teachers'
+            text: 'Number of Requests'
           }
         },
         series: [
@@ -261,12 +262,16 @@ export class DashboardComponent {
           this.testingDevicesArray = devices.filter(d => d.online && d.status !== 'INSTALLED');
 
           this.installedDevices = this.installedDevicesArray.length;
-          this.testingDevices = (devices.length - this.installedDevices);
+          //this.testingDevices = (devices.length - this.installedDevices);
+          this.testingDevices = this.testingDevicesArray.length;
 
           this.onlineDevices = this.onlineDevicesArray.length;
           this.offlineDevices = this.offlineDevicesArray.length;
 
           this.onlineTestingDevices = this.testingDevicesArray.length;
+
+
+          this.getDeviceStatus(this.installedDevicesArray);
 
 
         },
@@ -275,7 +280,7 @@ export class DashboardComponent {
 
   }
 
-  getDeviceStatus() {
+  getDeviceStatus(installedDevices: DeviceDto[]) {
 
     this.commonsService.getDocuments('deviceStatus')
       .pipe(map(data => data as DeviceStatusDto[]))
@@ -286,15 +291,38 @@ export class DashboardComponent {
           //INSTALLED
 
 
+
           this.armedDevicesArray = deviceStatus.filter(d => d.armed != 0);
           this.halfArmedDevicesArray = deviceStatus.filter(d => d.armed === 1);
           this.fullArmedDevicesArray = deviceStatus.filter(d => d.armed === 2);
 
           let onlineDevicesArray: DeviceStatusDto[] = deviceStatus.filter(d => d.armed === 2);
 
-          this.armedDevices = this.armedDevicesArray.length;
-          this.halfArmedDevices = this.halfArmedDevicesArray.length;
-          this.fullArmedDevices = this.fullArmedDevicesArray.length;
+          let installedArmedDevices: DeviceDto[] = [];
+          let installedFullArmedDevices: DeviceDto[] = [];
+          let installedHalfArmedDevices: DeviceDto[] = [];
+
+          installedDevices.forEach(element => {
+            if (this.deviceExists(this.armedDevicesArray, element.deviceNumber)) {
+              installedArmedDevices.push(element);
+            }
+          });
+
+          installedDevices.forEach(element => {
+            if (this.deviceExists(this.fullArmedDevicesArray, element.deviceNumber)) {
+              installedFullArmedDevices.push(element);
+            }
+          });
+
+          installedDevices.forEach(element => {
+            if (this.deviceExists(this.halfArmedDevicesArray, element.deviceNumber)) {
+              installedHalfArmedDevices.push(element);
+            }
+          });
+
+          this.armedDevices = installedArmedDevices.length;
+          this.halfArmedDevices = installedHalfArmedDevices.length;
+          this.fullArmedDevices = installedFullArmedDevices.length;
 
 
         },
@@ -306,22 +334,22 @@ export class DashboardComponent {
 
   loadInstalledDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.installedDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list'],);
   }
 
   loadOnlineDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.onlineDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadOfflineDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.offlineDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadTestingDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.testingDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
 
@@ -338,7 +366,7 @@ export class DashboardComponent {
 
 
     this.dashboardService.onlineDevicesSubject.next(armedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadHalfArmedDevices() {
@@ -352,7 +380,7 @@ export class DashboardComponent {
     });
 
     this.dashboardService.onlineDevicesSubject.next(halfArmedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadFullArmedDevices() {
@@ -366,7 +394,7 @@ export class DashboardComponent {
     });
 
     this.dashboardService.onlineDevicesSubject.next(fullArmedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loaddDisArmedDevices() {
@@ -380,7 +408,7 @@ export class DashboardComponent {
     });
 
     this.dashboardService.onlineDevicesSubject.next(disarmTimermedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   deviceExists(devicesStatus: DeviceStatusDto[], deviceNumber: string): boolean {
@@ -411,8 +439,9 @@ export class DashboardComponent {
     let date: string = year + '-' + convertedMonth + '-' + day;
 
     console.log('doorbells', date);
-
+    this.alarmDate = date;
     this.loadAlarmsByDate(date);
+
 
   }
 
@@ -432,6 +461,8 @@ export class DashboardComponent {
 
     console.log('doorbells', date);
 
+    this.doorbellDate = date;
+
     this.loadDoorBellByDate(date);
   }
 
@@ -448,7 +479,10 @@ export class DashboardComponent {
 
     console.log('doorbells', date);
 
+    this.doorbellDate = date;
+
     this.loadDoorBellByDate(date);
+
 
 
 
@@ -466,7 +500,10 @@ export class DashboardComponent {
 
     console.log('Todays Alarms', date);
 
+    this.alarmDate = date;
+
     this.loadAlarmsByDate(date);
+
 
   }
 
@@ -527,5 +564,22 @@ export class DashboardComponent {
       });
 
   }
+
+  loadDeviceAlarmDetails() {
+    this.dashboardService.deviceAlarmSubject.next(this.totalAlarms);
+    this.router.navigate(['/main/device_alarm_details']);
+  }
+
+  loadDeviceDoorbellDetails() {
+    this.dashboardService.deviceDoorbellSubject.next(this.triggeredDoorBells);
+    this.router.navigate(['/main/doorbell_details']);
+  }
+
+  loadAcknowledgedDeviceDoorbellDetails() {
+    this.dashboardService.deviceDoorbellSubject.next(this.acknowledgedDoorBells);
+    this.router.navigate(['/main/doorbell_details']);
+  }
+
+  //
 
 }

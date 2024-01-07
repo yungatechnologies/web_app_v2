@@ -5,27 +5,28 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { map, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { DeviceDto } from 'src/app/devices/devices.dto';
+import { AlarmDto, DeviceDto } from 'src/app/devices/devices.dto';
 import { CommonsService } from 'src/app/commons/commons.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from '../dashboard.service';
 
 @Component({
-    selector: 'app-device-list',
-    templateUrl: './device-list.component.html',
-    styleUrls: ['./device-list.component.scss']
+    selector: 'app-alarm-details',
+    templateUrl: './alarm-details.component.html',
+    styleUrls: ['./alarm-details.component.scss']
 })
-export class DeviceListComponent implements AfterViewInit, OnInit {
+export class AlarmDetailsComponent implements AfterViewInit, OnInit {
+ 
 
-    displayedColumns: string[] = ['no', 'deviceNumber', 'serialNumber', 'phoneNumber', 'status', 'stage'];
+    displayedColumns: string[] = ['no', 'deviceNumber', 'date', 'name', 'userPhone', 'address','source'];
 
-    dataSource!: MatTableDataSource<DeviceDto>;
+    dataSource!: MatTableDataSource<AlarmDto>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
 
-    devices: DeviceDto[] = []
+    alarms: AlarmDto[] = []
 
     constructor(private commonsService: CommonsService,
         public dialog: MatDialog,
@@ -38,31 +39,31 @@ export class DeviceListComponent implements AfterViewInit, OnInit {
     }
     ngOnInit(): void {
 
-        console.log('Entry to loading device list: ');
+        console.log('Entry to loading device alarms list: ');
 
-        this.dashboardService.onlineDevicesSubject.subscribe(
+        this.dashboardService.deviceAlarmSubject.subscribe(
             {
                 next: response => {
-                    this.devices = response;
-                    console.log('onlineDevicesSubject:: ' + this.devices.length)
+                    this.alarms = response;
+                    console.log('deviceAlarmSubject:: ' + this.alarms.length)
                 },
                 error: error => {
-                    console.log('ERROR:: onlineDevicesSubject:: ')
-                    console.log(error);
+                    console.log('ERROR:: deviceAlarmSubject:: ',error)
+                     
                 }
             }
         );
 
-        this.getDevices();
+        this.getDevicesAlarms();
 
     }
 
 
 
 
-    getDevices() {
+    getDevicesAlarms() {
 
-        this.dataSource = new MatTableDataSource(this.devices);
+        this.dataSource = new MatTableDataSource(this.alarms);
     }
 
     ngAfterViewInit() {

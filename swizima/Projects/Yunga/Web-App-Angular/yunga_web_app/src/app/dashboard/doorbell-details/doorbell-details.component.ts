@@ -5,27 +5,28 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { map, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { DeviceDto } from 'src/app/devices/devices.dto';
+import { AlarmDto, DeviceDto, DoorBellDto } from 'src/app/devices/devices.dto';
 import { CommonsService } from 'src/app/commons/commons.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from '../dashboard.service';
 
 @Component({
-    selector: 'app-device-list',
-    templateUrl: './device-list.component.html',
-    styleUrls: ['./device-list.component.scss']
+    selector: 'app-doorbell-details',
+    templateUrl: './doorbell-details.component.html',
+    styleUrls: ['./doorbell-details.component.scss']
 })
-export class DeviceListComponent implements AfterViewInit, OnInit {
+export class DoorbellDetailsComponent implements AfterViewInit, OnInit {
 
-    displayedColumns: string[] = ['no', 'deviceNumber', 'serialNumber', 'phoneNumber', 'status', 'stage'];
+  
+    displayedColumns: string[] = ['no', 'deviceNumber', 'date', 'guest', 'note', 'userId'];
 
-    dataSource!: MatTableDataSource<DeviceDto>;
+    dataSource!: MatTableDataSource<DoorBellDto>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
 
-    devices: DeviceDto[] = []
+    doorbells: DoorBellDto[] = []
 
     constructor(private commonsService: CommonsService,
         public dialog: MatDialog,
@@ -38,31 +39,31 @@ export class DeviceListComponent implements AfterViewInit, OnInit {
     }
     ngOnInit(): void {
 
-        console.log('Entry to loading device list: ');
+        console.log('Entry to loading device alarms list: ');
 
-        this.dashboardService.onlineDevicesSubject.subscribe(
+        this.dashboardService.deviceDoorbellSubject.subscribe(
             {
                 next: response => {
-                    this.devices = response;
-                    console.log('onlineDevicesSubject:: ' + this.devices.length)
+                    this.doorbells = response;
+                    console.log('deviceDoorbellSubject:: ' + this.doorbells.length)
                 },
                 error: error => {
-                    console.log('ERROR:: onlineDevicesSubject:: ')
-                    console.log(error);
+                    console.log('ERROR:: deviceDoorbellSubject:: ', error)
+
                 }
             }
         );
 
-        this.getDevices();
+        this.getDevicesDoorbells();
 
     }
 
 
 
 
-    getDevices() {
+    getDevicesDoorbells() {
 
-        this.dataSource = new MatTableDataSource(this.devices);
+        this.dataSource = new MatTableDataSource(this.doorbells);
     }
 
     ngAfterViewInit() {
