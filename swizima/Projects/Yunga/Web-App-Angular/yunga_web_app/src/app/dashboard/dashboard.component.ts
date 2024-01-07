@@ -334,22 +334,22 @@ export class DashboardComponent {
 
   loadInstalledDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.installedDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list'],);
   }
 
   loadOnlineDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.onlineDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadOfflineDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.offlineDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadTestingDevices() {
     this.dashboardService.onlineDevicesSubject.next(this.testingDevicesArray);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
 
@@ -366,7 +366,7 @@ export class DashboardComponent {
 
 
     this.dashboardService.onlineDevicesSubject.next(armedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadHalfArmedDevices() {
@@ -380,7 +380,7 @@ export class DashboardComponent {
     });
 
     this.dashboardService.onlineDevicesSubject.next(halfArmedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loadFullArmedDevices() {
@@ -394,7 +394,7 @@ export class DashboardComponent {
     });
 
     this.dashboardService.onlineDevicesSubject.next(fullArmedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   loaddDisArmedDevices() {
@@ -408,7 +408,7 @@ export class DashboardComponent {
     });
 
     this.dashboardService.onlineDevicesSubject.next(disarmTimermedDevices);
-    this.router.navigate(['device_list'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_list']);
   }
 
   deviceExists(devicesStatus: DeviceStatusDto[], deviceNumber: string): boolean {
@@ -567,17 +567,17 @@ export class DashboardComponent {
 
   loadDeviceAlarmDetails() {
     this.dashboardService.deviceAlarmSubject.next(this.totalAlarms);
-    this.router.navigate(['device_alarm_details'], { relativeTo: this.route });
+    this.router.navigate(['/main/device_alarm_details']);
   }
 
   loadDeviceDoorbellDetails() {
     this.dashboardService.deviceDoorbellSubject.next(this.triggeredDoorBells);
-    this.router.navigate(['doorbell_details'], { relativeTo: this.route });
+    this.router.navigate(['/main/doorbell_details']);
   }
 
   loadAcknowledgedDeviceDoorbellDetails() {
     this.dashboardService.deviceDoorbellSubject.next(this.acknowledgedDoorBells);
-    this.router.navigate(['doorbell_details'], { relativeTo: this.route });
+    this.router.navigate(['/main/doorbell_details']);
   }
 
   //

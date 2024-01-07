@@ -6,9 +6,16 @@
           "yunga-232719"
         ]
       }
+    },
+    "yunga-test": {
+      "hosting": {
+        "yunga_web_app": [
+          "yunga-test"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "yunga-232719"
+    "default": "yunga-test"
   }
 }

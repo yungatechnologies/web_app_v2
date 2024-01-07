@@ -39,6 +39,11 @@ import { DeviceListComponent } from './dashboard/device-list/device-list.compone
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AlarmDetailsComponent } from './dashboard/alarm-details/alarm-details.component';
 import { DoorbellDetailsComponent } from './dashboard/doorbell-details/doorbell-details.component';
+import { LoginComponent } from './login/login.component';
+import { ContentComponent } from './content/content.component';
+import { AuthGuard } from './login/auth-guard.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -61,7 +66,9 @@ import { DoorbellDetailsComponent } from './dashboard/doorbell-details/doorbell-
     NetworksPopupComponent,
     DeviceListComponent,
     AlarmDetailsComponent,
-    DoorbellDetailsComponent
+    DoorbellDetailsComponent,
+    LoginComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,
@@ -75,15 +82,16 @@ import { DoorbellDetailsComponent } from './dashboard/doorbell-details/doorbell-
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
-    ChartModule, 
+    ChartModule,
     MatDatepickerModule,
+    HttpClientModule,
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase))
 
   ],
   providers: [
 
-    ScreenTrackingService, UserTrackingService,
+    ScreenTrackingService, UserTrackingService,AuthGuard,
     { provide: HIGHCHARTS_MODULES, useFactory: () => [more, exporting] }
   ],
   bootstrap: [AppComponent]

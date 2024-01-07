@@ -1,3 +1,17 @@
+// export const environment = {
+//   firebase: {
+//     projectId: 'yunga-test',
+//     appId: '1:956800139202:web:144c2463c658702bf9605b',
+//     databaseURL: 'https://yunga-test-default-rtdb.europe-west1.firebasedatabase.app',
+//     storageBucket: 'yunga-test.appspot.com',
+//     locationId: 'us-central',
+//     apiKey: 'AIzaSyByGBJm6sL3SThu5co_YsagJyXgY74UR8c',
+//     authDomain: 'yunga-test.firebaseapp.com',
+//     messagingSenderId: '956800139202',
+//     measurementId: 'G-4VCJSJJ3Q0',
+//   },
+// };
+
 export const environment = {
   firebase: {
     projectId: 'yunga-232719',
